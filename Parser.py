@@ -3,7 +3,7 @@ from Token import Token
 class Parser:
     #TODO: fix expressions with one ); 1)+); Bad things with )
     def __init__(self, input_string):
-        self.input_string = input_string
+        self.input_string = input_string.replace(" ", "")
         self.variable = 'x'
         self.tokens = ["+", "-", "*", "/", "^", "(", ")", "sin", "cos", "log", "tan", "atan", "exp", "ctan"]
         self.unary_operations = ["-", "sin", "cos", "log", "tan", "atan", "exp", "ctan"]

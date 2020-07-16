@@ -1,4 +1,5 @@
 from Parser import Parser
+import numpy as np
 import math
 
 
@@ -7,9 +8,9 @@ class Integration:
         self.input_string = func
         self.N = n
         self.h = (b - a) / n
-        self.x = []
-        for i in range(self.N):
-            self.x.append(a + i * self.h)
+        self.x = np.linspace(a, b, n)
+        # for i in range(self.N):
+        #     self.x.append(a + i * self.h)
 
     def evaluation(self, token, x):
         arguments = token.arguments
