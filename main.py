@@ -19,7 +19,8 @@ x = integration.x
 y = [integration.function(i) for i in x]
 plt.fill_between(x, 0, y, facecolor='g', alpha=0.5)
 plt.show()
-# s = '-3^(sin(x)+2*cos(2*x))+4'
-# p = Parser(s)
-# res = p.parse()
+# s = Integration('-1+1+2', 0, 1, 100)
+# p = Parser('-1+1+2')
+# r = p.parse_string()
+# res = s.evaluate(r, 0)
 # print(res)

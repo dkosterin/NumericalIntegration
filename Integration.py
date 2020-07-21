@@ -9,25 +9,25 @@ class Integration:
         self.N = n
         self.h = (b - a) / n
         self.x = np.linspace(a, b, n)
-        # for i in range(self.N):
-        #     self.x.append(a + i * self.h)
 
-    def evaluation(self, token, x):
+    def evaluate(self, token, x):
         arguments = token.arguments
         if token.type == 'Operation':
             if token.value == '*':
-                return self.evaluation(arguments[0], x) * self.evaluation(arguments[1], x)
+                return self.evaluate(arguments[0], x) * self.evaluate(arguments[1], x)
             elif token.value == '+':
-                return self.evaluation(arguments[0], x) + self.evaluation(arguments[1], x)
+                return self.evaluate(arguments[0], x) + self.evaluate(arguments[1], x)
             elif token.value == '-':
-                return self.evaluation(arguments[0], x) - self.evaluation(arguments[1], x)
+                return self.evaluate(arguments[0], x) - self.evaluate(arguments[1], x)
             elif token.value == '/':
-                return self.evaluation(arguments[0], x) / self.evaluation(arguments[1], x)
+                return self.evaluate(arguments[0], x) / self.evaluate(arguments[1], x)
             elif token.value == '^':
-                return self.evaluation(arguments[0], x) ** self.evaluation(arguments[1], x)
+                return self.evaluate(arguments[0], x) ** self.evaluate(arguments[1], x)
             else:
                 raise Exception('Bad operation token')
         elif token.type == 'Function':
+            if token.value == '-':
+                return -self.evaluate(arguments[0], x)
             if token.value == 'sin':
                 return math.sin(x)
             elif token.value == 'cos':
@@ -51,8 +51,8 @@ class Integration:
 
     def function(self, x):
         p = Parser(self.input_string)
-        result = p.parse()
-        return self.evaluation(result, x)
+        result = p.parse_string()
+        return self.evaluate(result, x)
 
     def integrate(self, rule):
         if rule == 'Rectangle':

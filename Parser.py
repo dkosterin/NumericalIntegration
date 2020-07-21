@@ -1,13 +1,19 @@
 from Token import Token
 
 class Parser:
-    #TODO: fix expressions with one ); 1)+); Bad things with )
     def __init__(self, input_string):
         self.input_string = input_string.replace(" ", "")
         self.variable = 'x'
         self.tokens = ["+", "-", "*", "/", "^", "(", ")", "sin", "cos", "log", "tan", "atan", "exp", "ctan"]
         self.unary_operations = ["-", "sin", "cos", "log", "tan", "atan", "exp", "ctan"]
         self.binary_operations = ["+", "-", "*", "/", "^", ")"]
+
+    def parse_string(self):
+        result = self.parse()
+        if self.input_string:
+            raise Exception('Invalid input')
+        else:
+            return result
 
     def parse(self):
         return self.parse_binary_operations(0)
@@ -48,7 +54,7 @@ class Parser:
     def parse_simple_expression(self):
         token = self.parse_token()
         if not token:
-            raise Exception('Input error')
+            raise Exception('Invalid input')
         if self.is_digit(token):
             return Token(token, 'Number', [])
         if token == self.variable:
@@ -60,7 +66,7 @@ class Parser:
                 raise Exception('Expected )')
             return result
         if token not in self.unary_operations:
-            raise Exception('Input error')
+            raise Exception('Invalid input')
         arguments = [self.parse_simple_expression()]
         return Token(token, 'Function', arguments)
 
@@ -83,7 +89,7 @@ class Parser:
         while True:
             operation = self.parse_token()
             if self.input_string and operation not in self.binary_operations:
-                raise Exception('Input error')
+                raise Exception('Invalid input')
             operation_priority = self.get_priority(operation)
             if operation_priority <= priority:
                 self.input_string = operation + self.input_string
