@@ -5,7 +5,8 @@ import math
 
 class Integration:
     def __init__(self, func, a, b, n):
-        self.input_string = func
+        p = Parser(func)
+        self.input = p.parse_string()
         self.N = n
         self.h = (b - a) / n
         self.x = np.linspace(a, b, n)
@@ -50,9 +51,7 @@ class Integration:
             raise Exception('Bad token type')
 
     def function(self, x):
-        p = Parser(self.input_string)
-        result = p.parse_string()
-        return self.evaluate(result, x)
+        return self.evaluate(self.input, x)
 
     def integrate(self, rule):
         if rule == 'Rectangle':
